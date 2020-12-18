@@ -44,6 +44,13 @@ use_counters = {
     'LocalInNonsecureUnknown': 3693,
     'PrivateInNonsecurePublic': 3695,
     'PrivateInNonsecureUnknown': 3697,
+
+    # `javascript:` URLs.
+    'ExecutedJavaScriptURL': 2955,
+    'ReplacedDocumentViaJavaScriptURL': 215,
+
+    # DOM Clobbering
+    'ClobberedVariableAccessed': 1824,
 }
 
 days = set()
