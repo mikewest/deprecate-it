@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Deprecation Metrics</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;800&family=Roboto+Slab:wght@100;500&display=swap" rel="stylesheet" crossorigin="anonymous">
+<style>
+  body, html {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    background: black;
+    color: white;
+    font: 100 40px/1.2 'Roboto Slab', sans-serif;
+    margin: 0 0 40px 0;
+    padding: 40px;
+    text-align: right;
+  }
+  article {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  h2 {
+    font: 800 24px/1.2 'Open Sans', sans-serif;
+  }
+
+    h2 a, h2 a:visited {
+      margin-left: -24px;
+      margin-right: 4px;
+      text-decoration: none;
+      font-weight: 400;
+      color: #FFF;
+    }
+      h2:hover a, h3:hover a {
+        color: #99F;
+      }
+
+  p, ul {
+    font: 18px/1.2 'Open Sans', sans-serif;
+  }
+  li {
+    margin: 0 0 20px 20px;
+  }
+  section {
+    max-width:750px;
+    margin: 1em auto;
+    background: #111;
+  }
+
+  h3 {
+    color: #000;
+    font-family: 'Roboto Slab', 'Sans Serif';
+    font-weight: 100;
+    font-size: 22px;
+    margin: 0;
+    padding: 0.5em;
+  }
+    h3 a {
+      color: #FFF;  
+    }
+
+  table {
+    width: 100%;
+    text-align: center;
+  }
+  th {
+    font-family: 'Roboto Slab';
+    color: #FFF;
+    font-size: 
+  }
+  td {
+    font-family: 'Roboto Slab', 'Sans Serif';
+    font-weight: 500;
+    font-size: 40px;
+    color: #FFF;
+  }
+    td.passes-few  { color: #e57373; }
+    td.passes-some { color: #ffb74d; }
+    td.passes-many { color: #dce775; }
+    td.passes-most { color: #aed581; }
+    td.passes-all  { color: #81c784; }
+
+  footer {
+    background: black;
+    color: white;
+    margin: 1em 0 0 0;
+    padding: 1ch 2ch;
+    font: 15px/1.4 'Open Sans', sans-serif;
+    text-align: right;
+  }
+    footer a, footer a:visited {
+      font-family: monospace;
+      color: #52cbff;
+    }
+</style>
+</head>
+<body>
+  <h1>Web Deprecation Metrics</h1>
+  <article>
+    <h2 id="document-domain">
+      <a href="#document-domain">§</a>
+      <code>document.domain</code>
+    </h2>
+    <p>
+      <code>document.domain</code>'s ability to relax the same-origin policy, allowing two same-site
+      pages to synchronously script each other, is a footgun. It complicates the implementation of
+      the single defensible security boundary the web can reasonably uphold, and confounds our
+      ability to cleanly map that boundary onto an underlying process. Ideally, we'll be able to
+      <a href="https://github.com/mikewest/deprecating-document-domain">remove this behavior from
+      the platform</a>, as part of a broader shift towards origin-level isolation by default.
+    </p>
+    <p>
+      The data below is gathered from
+      <a href="https://chromestatus.com/metrics/feature/popularity">Chrome's usage statistics</a>,
+      and represents the percentage of Chrome page loads that are affected by
+      <code>document.domain</code> either allowing or blocking a cross-origin access that would
+      have behaved otherwise in its absence.
+    </p>
+      
+    <canvas id="dd_usage"></canvas>
+  </article>
+
+  <article>
+   <h2 id="sab-isolation">
+     <a href="#sab-isolation">§</a>
+     Unisolated <code>SharedArrayBuffer</code>
+   </h2>
+   <p>TODO: explain.</p>
+
+   <canvas id="sab_usage"></canvas>
+  </article>
+
+
+  <article>
+   <h2 id="mime-sniffing">
+     <a href="#mime-sniffing">§</a>
+     MIME Sniffing
+   </h2>
+   <p>TODO: explain.</p>
+
+   <h3>Same-Origin MIME Mismatches</h3>
+   <canvas id="same_origin_mime_usage"></canvas>
+
+   <h3>Cross-Origin MIME Mismatches</h3>
+   <canvas id="cross_origin_mime_usage"></canvas>
+
+   <h3>Worker Mismatches</h3>
+   <canvas id="worker_usage"></canvas>
+  </article>
+
+  <article>
+   <h2 id="cors-rfc1918">
+     <a href="#cors-rfc1918">§</a>
+     Private Network Access
+   </h2>
+   <p>TODO: explain.</p>
+
+   <h3>Private Network Access from Nonsecure Contexts</h3>
+   <canvas id="nonsecure_private_network_usage"></canvas>
+
+   <h3>Private Network Access from Secure Contexts</h3>
+   <canvas id="secure_private_network_usage"></canvas>
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
+  <script nonce="not-really-a-nonce">
+    const colors = { red: "#e41a1c", blue: "#377eb8", green: "#4daf4a", orange: "#ff7f00", purple: "#984ea3" };
+    const use_counter_days = {{ use_counter_days|tojson }};
+    const use_counter_buckets = {{ use_counter_buckets|tojson }}
+
+    // Vertical lines for Chrome milestones:
+    const milestones = { 'M87': '2020-11-17', 'M86': '2020-10-06' };
+    const annotations = Object.entries(milestones).map(([m, date]) => {
+      return {
+        id: m,
+        type: 'line',
+        mode: 'vertical',
+        scaleID: 'x-axis-0',
+        value: use_counter_days.find(v => v == date),
+        borderColor: colors["orange"],
+        borderWidth: 1,
+        label: {
+          backgroundColor: colors["orange"],
+          content: m,
+          enabled: true,
+          position: "bottom",
+          yAdjust: 5
+        }
+      };
+    });
+
+    // Configure chart options:
+    const chart_options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              callback: (v) => { return v + '%'; }
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Percentage of Page Views'
+            }
+          }
+        ]
+      },
+      annotation: { annotations: annotations }
+    };
+
+    // Configure charts:
+    const charts = [{
+        id: "dd_usage",
+        data: [{
+            label: "document.domain allowed access",
+            color: "green",
+            useCounter: 2544
+          }, {
+            label: "document.domain blocked access",
+            color: "red",
+            useCounter: 2543
+          }]
+      }, {
+        id: "sab_usage",
+        data: [{
+            label: "Shared Array Buffer",
+            color: "red",
+            useCounter: 3114
+          }]
+      }, {
+        id: "same_origin_mime_usage",
+        data: [{
+            label: "application/octet-stream",
+            color: "red",
+            useCounter: 2167
+          }, {
+            label: "application/xml",
+            color: "blue",
+            useCounter: 2168
+          }, {
+            label: "text/html",
+            color: "green",
+            useCounter: 2169
+          }, {
+            label: "text/plain",
+            color: "orange",
+            useCounter: 2170
+          }, {
+            label: "text/xml",
+            color: "purple",
+            useCounter: 2171
+          }]
+      }, {
+        id: "cross_origin_mime_usage",
+        data: [{
+            label: "application/octet-stream",
+            color: "red",
+            useCounter: 2172
+          }, {
+            label: "application/xml",
+            color: "blue",
+            useCounter: 2173
+          }, {
+            label: "text/html",
+            color: "green",
+            useCounter: 2174
+          }, {
+            label: "text/plain",
+            color: "orange",
+            useCounter: 2175
+          }, {
+            label: "text/xml",
+            color: "purple",
+            useCounter: 2176
+          }]
+      }, {
+        id: "worker_usage",
+        data: [{
+            label: "Strict checks would block worker",
+            color: "red",
+            useCounter: 3090
+          }]
+      }, {
+        id: "nonsecure_private_network_usage",
+        data: [{
+            label: "Local in Private",
+            color: "red",
+            useCounter: 3689
+          }, {
+            label: "Local in Public",
+            color: "blue",
+            useCounter: 3691
+          }, {
+            label: "Local in Unknown",
+            color: "green",
+            useCounter: 3693
+          }, {
+            label: "Private in Public",
+            color: "orange",
+            useCounter: 3695
+          }, {
+            label: "Private in Unknown",
+            color: "purple",
+            useCounter: 3697,
+          }]
+      }, {
+        id: "secure_private_network_usage",
+        data: [{
+            label: "Local in Private",
+            color: "red",
+            useCounter: 3688
+          }, {
+            label: "Local in Public",
+            color: "blue",
+            useCounter: 3690
+          }, {
+            label: "Local in Unknown",
+            color: "green",
+            useCounter: 3692
+          }, {
+            label: "Private in Public",
+            color: "orange",
+            useCounter: 3694
+          }, {
+            label: "Private in Unknown",
+            color: "purple",
+            useCounter: 3696
+          }]
+      }
+    ];
+
+    charts.forEach(c => {
+      new Chart(c.id, {
+        type: "line",
+        options: chart_options,
+        data: {
+          labels: use_counter_days,
+          datasets: c.data.map(d => {
+            return {
+              label: d.label,
+              borderColor: colors[d.color],
+              data: use_counter_buckets[d.useCounter + ""]
+            };
+          })
+        }
+      });
+    });
+  </script>
+  <footer>
+    Something you'd like to see? <a href="https://github.com/mikewest/deprecate-it">File an issue!</a> &ndash; Updated on {{ datestamp }}.
+  </footer>
+</body>
+</html>
