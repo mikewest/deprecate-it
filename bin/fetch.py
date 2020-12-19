@@ -49,8 +49,15 @@ use_counters = {
     'ExecutedJavaScriptURL': 2955,
     'ReplacedDocumentViaJavaScriptURL': 215,
 
-    # DOM Clobbering
+    # Bad Markup
     'ClobberedVariableAccessed': 1824,
+    'NestedForm': 1972,
+    'DuplicateScriptAttribute': 2251,
+
+    # Plugin Elements
+    "EmbedLoadedDocument": 3046,
+    "EmbedLoadedImage": 3047,
+    "EmbedLoadedExternal": 3048,
 }
 
 days = set()

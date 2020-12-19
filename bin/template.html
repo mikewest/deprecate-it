@@ -178,13 +178,23 @@
   </article>
 
   <article>
-   <h2 id="dom-clobbering">
-     <a href="#dom-clobbering">§</a>
-     DOM Clobbering
+   <h2 id="bad-markup">
+     <a href="#bad-markup">§</a>
+     Bad Markup
    </h2>
    <p>TODO: explain.</p>
 
-   <canvas id="clobbering_usage"></canvas>
+   <canvas id="bad_markup_usage"></canvas>
+  </article>
+
+  <article>
+   <h2 id="plugin-elements">
+     <a href="#plugin-elements">§</a>
+     &lt;object&gt; and &lt;embed&gt;
+   </h2>
+   <p>TODO: explain.</p>
+
+   <canvas id="plugin_element_usage"></canvas>
   </article>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
@@ -364,13 +374,36 @@
           useCounter: 215
         }]
       }, {
-        id: "clobbering_usage",
+        id: "plugin_element_usage",
         data: [{
-          label: "Clobbered variable accessed",
+          label: "Document via embed",
+          color: "red",
+          useCounter: 3046
+        }, {
+          label: "Image via embed",
+          color: "purple",
+          useCounter: 3047
+        }, {
+          label: "Plugin via embed",
+          color: "green",
+          useCounter: 3047
+        }]
+      }, {
+        id: "bad_markup_usage",
+        data: [{
+          label: "DOM Clobbered variable accessed",
           color: "red",
           useCounter: 1824
+        }, {
+          label: "Duplicated attribute in <script>",
+          color: "purple",
+          useCounter: 2251
+        }, {
+          label: "Nested <form>",
+          color: "blue",
+          useCounter: 1972
         }]
-      }
+      }      
     ];
 
     charts.forEach(c => {
