@@ -200,7 +200,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script nonce="not-really-a-nonce">
-    const colors = { red: "#e41a1c", blue: "#377eb8", green: "#4daf4a", orange: "#ff7f00", purple: "#984ea3" };
+    const colors = { deepSkyBlue: "#00bfff", orange: "#ff5400", limeGreen: "#32cd32", purple: "#984ea3", crimson: "#dc143c", steelBlue: "#4682b4", brown: "#a52a2a" };
     const use_counter_days = {{ use_counter_days|tojson }};
     const use_counter_buckets = {{ use_counter_buckets|tojson }}
 
@@ -249,158 +249,138 @@
         id: "dd_usage",
         data: [{
             label: "document.domain allowed access",
-            color: "green",
             useCounter: 2544
           }, {
             label: "document.domain blocked access",
-            color: "red",
             useCounter: 2543
           }]
       }, {
         id: "sab_usage",
         data: [{
             label: "Shared Array Buffer",
-            color: "red",
             useCounter: 3114
           }]
       }, {
         id: "same_origin_mime_usage",
         data: [{
             label: "application/octet-stream",
-            color: "red",
             useCounter: 2167
           }, {
             label: "application/xml",
-            color: "blue",
             useCounter: 2168
           }, {
             label: "text/html",
-            color: "green",
             useCounter: 2169
           }, {
             label: "text/plain",
-            color: "orange",
             useCounter: 2170
           }, {
             label: "text/xml",
-            color: "purple",
             useCounter: 2171
+          }, {
+            label: "JSON",
+            useCounter: 3737
+          }, {
+            label: "Other blocked by strict",
+            useCounter: 3739
           }]
       }, {
         id: "cross_origin_mime_usage",
         data: [{
             label: "application/octet-stream",
-            color: "red",
             useCounter: 2172
           }, {
             label: "application/xml",
-            color: "blue",
             useCounter: 2173
           }, {
             label: "text/html",
-            color: "green",
             useCounter: 2174
           }, {
             label: "text/plain",
-            color: "orange",
             useCounter: 2175
           }, {
             label: "text/xml",
-            color: "purple",
             useCounter: 2176
+          }, {
+            label: "JSON",
+            useCounter: 3738
+          }, {
+            label: "Other blocked by strict",
+            useCounter: 3740
           }]
       }, {
         id: "worker_usage",
         data: [{
             label: "Strict checks would block worker",
-            color: "red",
             useCounter: 3090
           }]
       }, {
         id: "nonsecure_private_network_usage",
         data: [{
             label: "Local in Private",
-            color: "red",
             useCounter: 3689
           }, {
             label: "Local in Public",
-            color: "blue",
             useCounter: 3691
           }, {
             label: "Local in Unknown",
-            color: "green",
             useCounter: 3693
           }, {
             label: "Private in Public",
-            color: "orange",
             useCounter: 3695
           }, {
             label: "Private in Unknown",
-            color: "purple",
             useCounter: 3697,
           }]
       }, {
         id: "secure_private_network_usage",
         data: [{
             label: "Local in Private",
-            color: "red",
             useCounter: 3688
           }, {
             label: "Local in Public",
-            color: "blue",
             useCounter: 3690
           }, {
             label: "Local in Unknown",
-            color: "green",
             useCounter: 3692
           }, {
             label: "Private in Public",
-            color: "orange",
             useCounter: 3694
           }, {
             label: "Private in Unknown",
-            color: "purple",
             useCounter: 3696
           }]
       }, {
         id: "js_url_usage",
         data: [{
           label: "javascript: URL executed",
-          color: "red",
           useCounter: 2955
         }, {
           label: "javascript: replaced document",
-          color: "purple",
           useCounter: 215
         }]
       }, {
         id: "plugin_element_usage",
         data: [{
           label: "Document via embed",
-          color: "red",
           useCounter: 3046
         }, {
           label: "Image via embed",
-          color: "purple",
           useCounter: 3047
         }, {
           label: "Plugin via embed",
-          color: "green",
           useCounter: 3047
         }]
       }, {
         id: "bad_markup_usage",
         data: [{
           label: "DOM Clobbered variable accessed",
-          color: "red",
           useCounter: 1824
         }, {
           label: "Duplicated attribute in <script>",
-          color: "purple",
           useCounter: 2251
         }, {
           label: "Nested <form>",
-          color: "blue",
           useCounter: 1972
         }]
       }      
@@ -412,10 +392,10 @@
         options: chart_options,
         data: {
           labels: use_counter_days,
-          datasets: c.data.map(d => {
+          datasets: c.data.map((d, i) => {
             return {
               label: d.label,
-              borderColor: colors[d.color],
+              borderColor: colors[Object.keys(colors)[i]],
               data: use_counter_buckets[d.useCounter + ""]
             };
           })

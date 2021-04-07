@@ -26,11 +26,15 @@ use_counters = {
     'SameOriginTextHtml': 2169,
     'SameOriginTextPlain': 2170,
     'SameOriginTextXml': 2171,
+    'SameOriginJSON': 3737,
+    'SameOriginOtherBlockedByStrict': 3739,
     'CrossOriginApplicationOctetStream': 2172,
     'CrossOriginApplicationXml': 2173,
     'CrossOriginTextHtml': 2174,
     'CrossOriginTextPlain': 2175,
     'CrossOriginTextXml': 2176,
+    'CrossOriginJSON': 3738,
+    'CrossOriginOtherBlockedByStrict': 3740,
     'StrictWouldBlockWorker': 3090,
 
     # CORS-RFC1918
@@ -58,6 +62,9 @@ use_counters = {
     "EmbedLoadedDocument": 3046,
     "EmbedLoadedImage": 3047,
     "EmbedLoadedExternal": 3048,
+
+    # Frames
+    "CrossOriginFrameWithoutOptIn": 3752,
 }
 
 days = set()
