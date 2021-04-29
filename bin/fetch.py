@@ -47,7 +47,7 @@ use_counters = {
     'LocalInSecureUnknown': 3759,
     'LocalInNonsecureUnknown': 3760,
     'PrivateInSecureUnknown': 3761,
-    'PrivateInNonsecureUnknown': 3761,
+    'PrivateInNonsecureUnknown': 3762,
 
     # `javascript:` URLs.
     'ExecutedJavaScriptURL': 2955,
