@@ -38,16 +38,16 @@ use_counters = {
     'StrictWouldBlockWorker': 3090,
 
     # CORS-RFC1918
-    'LocalInSecurePrivate': 3688,
-    'LocalInSecurePublic': 3690,
-    'LocalInSecureUnknown': 3692,
-    'PrivateInSecurePublic': 3694,
-    'PrivateInSecureUnknown': 3696,
-    'LocalInNonsecurePrivate':  3689,
-    'LocalInNonsecurePublic': 3691,
-    'LocalInNonsecureUnknown': 3693,
-    'PrivateInNonsecurePublic': 3695,
-    'PrivateInNonsecureUnknown': 3697,
+    'LocalInSecurePrivate': 3753,
+    'LocalInNonsecurePrivate': 3754,
+    'LocalInSecurePublic': 3755,
+    'LocalInNonsecurePublic': 3756,
+    'PrivateInSecurePublic': 3757,
+    'PrivateInNonsecurePublic': 3758,
+    'LocalInSecureUnknown': 3759,
+    'LocalInNonsecureUnknown': 3760,
+    'PrivateInSecureUnknown': 3761,
+    'PrivateInNonsecureUnknown': 3761,
 
     # `javascript:` URLs.
     'ExecutedJavaScriptURL': 2955,
