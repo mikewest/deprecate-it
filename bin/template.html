@@ -197,6 +197,16 @@
    <canvas id="plugin_element_usage"></canvas>
   </article>
 
+  <article>
+    <h2 id="wasm-sharing">
+     <a href="#wasm-sharing">§</a>
+     WASM Module Sharing
+   </h2>
+   <p>TODO: explain.</p>
+
+   <canvas id="wasm_sharing_usage"></canvas>
+  </article>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@0.5.7/chartjs-plugin-annotation.min.js" integrity="sha256-Olnajf3o9kfkFGloISwP1TslJiWUDd7IYmfC+GdCKd4=" crossorigin="anonymous" nonce="not-really-a-nonce"></script>
   <script nonce="not-really-a-nonce">
@@ -383,7 +393,17 @@
           label: "Nested <form>",
           useCounter: 1972
         }]
-      }      
+      }, {
+        id: "wasm_sharing_usage",
+        data: [{
+          label: "All sharing.",
+          useCounter: 3801
+        }, {
+          label: "Cross-origin sharing",
+          useCounter: 3802
+        }]
+
+      }
     ];
 
     charts.forEach(c => {

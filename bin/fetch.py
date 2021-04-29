@@ -65,6 +65,10 @@ use_counters = {
 
     # Frames
     "CrossOriginFrameWithoutOptIn": 3752,
+
+    # Module Sharing
+    "WASMModuleSharing": 3801,
+    "WASMModuleSharingCrossOrigin": 3802,
 }
 
 days = set()
