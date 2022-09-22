@@ -15,6 +15,7 @@ use_counters = {
     # document.domain
     'DocumentDomainBlockedCrossOriginAccess': 2543,
     'DocumentDomainEnabledCrossOriginAccess': 2544,
+    'CrossOriginAccessBasedOnDocumentDomain': 4171,
 
     # SharedArrayBuffer
     'SABConstructed': 3114,
